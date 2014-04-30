@@ -1,0 +1,88 @@
+Rebecca Yuste-Golob
+https://github.com/ryustegolob/GridWorld-4-5
+APCS2 pd 8
+HW 34 -- GridWorld, Part 4
+2014-04-29
+
+Do You Know?
+Set 7
+1. What methods are implemented in Critter?
+   act(), getActors(), processActors(), getMoveLocations(), selectMoveLocation(), makeMove()
+
+2. What are the five basic actions common to all critters when they act?
+   1. Get the actors
+   2. Process the actors
+   3. Get possible locations to which they can move
+   4. Choose one of those locations to move to
+   5. Make the move!
+
+3. Should subclasses of Critter override the getActors method? Explain.
+   Depending on what the subclass of Critter wants to do and what specifications it has for its neighbors, the getActor method should be overriden.
+
+4. Describe three ways tat a critter could process actors.
+   1. A critter could eat the actor.
+   2. A critter could change the color of an actor.
+   3. A critter could move an actor.
+
+5. What three methods must be invoked to make a critter move? Explain each of these methods.
+   1. getMoveLocations(): This method gets all of the possible move locations. In the critter class, it checks for empty locations, but that can and should be overriden to meet specifications.
+   2. selectMoveLocation(loc): This method takes the possible locations and randomly selects one. 
+   3. makeMove(loc): This method moves to a specified places (loc), but if there is no loc (loc is null), then the critter is removed from the grid.
+
+6. Why is there no Critter constructor?
+   There is no need for a Critter constructor because it will default to the Actor constructor. Any Critter than has certain specifications for a constructor should extend Critter and make one of its own.
+
+
+Do You Know?
+Set 8
+1. Why does act cause a ChameleonCritter to act differently from a Critter even though ChameleonCritter does not override act?
+   A ChameleonCritter does not override the entire method, but it does override two of the methods used in act (processActors and makeMove), therefore causing it to act differently. 
+
+2. Why does the makeMove method of ChameleonCritter call super.makeMove()?
+   It calles super.makeMove() because after it changes direction to to face the new location, the makeMove() method should be identical to that of the superclass (Critter). 
+
+3. How would you make the ChameleonCritter drop flowers in its old location when it moves?
+   To make it drop flowers, I would change the makeMove method like so:
+
+   public void makeMove(Location loc){
+   	  Location old = getLocation();// saving current location
+	  setDirection(getLocation().getDirectionToward(loc)); //changing direction
+	  super.makeMove(loc);
+	  if (! old.equals(loc)){ // don't replace yourself
+	     Flower flower = new Flower(getColor());//make a new flower
+	     flower.putSelfInGrid(getGrid(), old);//put it in the old location
+	 }
+   }
+
+4. Why doesn't ChameleonCritter override the getActors method?
+   It doesn't override the getActors method because it has no need to. The specifications for which actors too look at are the same for a normal Critter. 
+
+5. Which class contains the getLocation method?
+   The Actor class has the getLocation method.
+
+6. How can a Critter access its own grid?
+   If a Critter calls getGrid(), it can get its own grid. It inherits this method from the Actor class. 
+
+Do You Know?
+Set 9
+1. Why doesn't CrabCritter override the processActors method?
+   The CrabCritter doesn't override the processActors method because it does the exact same thing any normal Critter would do when processing actors: it eats them.
+
+2. Describe the process a CrabCritter uses to find and eat other actors. Does it always eat all neighboring actors? Explain. 
+   The CrabCritter's getActors method only looks in front and to the right of the crab. All other neighbors are ignored. Therefore it will not eat all neighboring actors, but it will eat all neighbors that are in front and to the right of it.
+
+3. Why is the getLocationsInDirections method used in CrabCritter?
+   This method is used in the CrabCritter class because the CrabCritter can only move in certain directions, therefore limiting the locations it can move to. By inputting an array of possible directions, it helps get the list of possible moves it can make.
+
+4. If a CrabCritter has location (3,4) and faces south, what are the possible locations for actors that are returned by a call to the getActors method?
+   The CrabCritter can move to (4,3) (4,4) and (4,5).
+
+5. What are the similarities and differences between the movements of a CrabCritter and a Critter?
+   Similarities: Both Critters and CrabCritters do not turn in the direction they are moving, and randomly chose their location from a list of possible locations.
+   Differences: The CrabCritters range of motion is very much reduced. It can only move to its left or to its right, and when it cannot move, it will turn in one of those two directions. A critter can move in any direction and when it cannot move it doesn't turn.
+
+6. How does a CrabCritter determine when it turns instead of moving?
+   If the parameter loc in makeMove is equal to its current location, it turns.
+
+7. Why don't the CrabCritter objects eat each other?
+   The processActors in the Critter class will eat everything that is not a rock nor a critter. Since CrabCritter is a critter, and it inherits that method from Critter, it doesnt not eat CrabCritters. 
