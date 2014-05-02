@@ -86,3 +86,13 @@ Set 9
 
 7. Why don't the CrabCritter objects eat each other?
    The processActors in the Critter class will eat everything that is not a rock nor a critter. Since CrabCritter is a critter, and it inherits that method from Critter, it doesnt not eat CrabCritters. 
+
+A new type of Critter has appeared on the scene:   
+Voldemort Critter Specs:
+	  
+This Critter will only override the processActors method. It will kill all of the actors (literally everything, even rocks) who are one space away from it. It will get the actors and move in exactly the same way a normal Critter does.
+     
+Voldemort Critter Test Cases:
+- putting the Voldemort close to the edge
+- having no Critters nearby
+- having no spaces to move to
