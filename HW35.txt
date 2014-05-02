@@ -1,0 +1,73 @@
+Frances Shapiro --- TEAM NAME(??)
+git@github.com:ryustegolob/GridWorld-4-5.git
+APCS pd 8
+HW35 -- GridWorld, Part 5
+2014-05-01
+
+Do You Know?
+
+Set 10
+
+1. Where is the isValid method specified? Which classes provide an implementation of this method?
+
+The isValid method was first instantiated in the Grid<E> interface.  It is first implemented in the Bounded and Unbounded grid classes.
+
+2. Which AbstractGrid methods call the isValid method? Why don’t the other methods need to call it?
+
+The AbstractGrid method that calls isValid is getValidAdjacentLocations.  They don't need to call it because they call getValidAdjacentLocations.
+
+3. Which methods of the Grid interface are called in the getNeighbors method? Which classes provide implementations of these methods?
+
+The methods called in the getNeighbors method are getOccupiedAdjacentLocations and get.  The AbstractGrid implements getOccupiedAdjacentLocations while the Bounded and Unbounded grids implement get.   
+
+4. Why must the get method, which returns an object of type E, be used in the getEmptyAdjacentLocations method when this method returns locations, not objects of type E?
+
+Because getEmptyAdjacentLocations uses the get method to see if the location is empty.  When there is nothing in the location the get method returns null, so that's how this method finds out where the empty lcoations are.
+
+5. What would be the effect of replacing the constant Location.HALF_RIGHT with Location.RIGHT in the two places where it occurs in the getValidAdjacentLocations method?
+
+You would essentially skip over every other adjacent location when checking to see if they are valid.
+
+
+…
+Do You Know?
+
+Set 11
+
+1. What ensures that a grid has at least one valid location?
+
+The constructor of the Bounded Grid makes sure that both the rows and columns put in are positive, so there must be at least one valid location.
+
+2. How is the number of columns in the grid determined by the getNumCols method? What assumption about the grid makes this possible?
+
+The number of columns is measured by the length of the first row.  This is only possible if there is at least one row and one column.
+
+
+3. What are the requirements for a Location to be valid in a BoundedGrid?
+
+The location must be within the bounds of the grid.
+
+In the next four questions, let r = number of rows, c = number of columns, and n = number of occupied locations.
+
+4. What type is returned by the getOccupiedLocations method? What is the time complexity (Big-Oh) for this method?
+
+The type returned is an ArrayList<Location> because it is a list of the locations in the grid that are occupied by an Actor.  The Big O is O(n^2)
+
+5. What type is returned by the get method? What parameter is needed? What is the time complexity (Big-Oh) for this method?
+
+The get method returns type E.  The parameter is a Location.  The Big O is O(1).
+
+
+6. What conditions may cause an exception to be thrown by the put method? What is the time complexity (Big-Oh) for this method?
+
+If the Location is not valid, an exception will be thrown.  The Big Oh is O(1).
+
+
+7. What type is returned by the remove method? What happens when an attempt is made to remove an item from an empty location? What is the time complexity (Big-Oh) for this method?
+
+The remove method returns an object of type E, the thing you removed.  When you try to remove from an empty location it returns null.  The Big Oh is O(1).
+
+
+8. Based on the answers to questions 4, 5, 6, and 7, would you consider this an efficient implementation? Justify your answer.
+
+Yes because most of the methods are efficient with Big Ohs of O(1). 
